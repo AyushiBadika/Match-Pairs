@@ -42,7 +42,6 @@ let selectedSymbols = [];
 let symbolToPrint = [];
 
 restartButton.addEventListener("click", () => {
-  console.log("buttonClicked");
   container.innerHTML = "";
   selectedSymbols = [];
   symbolToPrint = [];
@@ -61,8 +60,7 @@ function selectingSymbols() {
       symbolToPrint.push(symbols[randomIndex]);
       symbolToPrint.push(symbols[randomIndex]);
     });
-  console.log(selectedSymbols);
-  console.log(symbolToPrint);
+
   shuffleArray(symbolToPrint);
 }
 
@@ -82,8 +80,6 @@ function createDivs() {
 
   const symbolContainer = document.querySelectorAll(".symbolContainer");
   const symbol = document.querySelectorAll(".symbol");
-  console.log(symbolContainer);
-  console.log(symbol);
 
   let matchingPairs = [];
   let matchingPairIndex = [];
@@ -91,33 +87,28 @@ function createDivs() {
 
   symbolContainer.forEach((singleSymbol, index) => {
     singleSymbol.addEventListener("click", () => {
-      console.log("clicked");
       noOfAttempts.innerHTML = Number(noOfAttempts.innerHTML) + 1;
       symbol[index].classList.add("activeSymbol");
-
       symbolContainer[index].classList.add("activeSymbolContainer");
 
-      setTimeout(() => {
-        gameFunctionality(index);
-      }, 1000);
+      gameFunctionality(index);
     });
   });
 
   function gameFunctionality(index) {
-    console.log("symbolsClicked" + symbol[index].innerHTML);
     matchingPairs.push(symbol[index].innerHTML);
     matchingPairIndex.push(index);
-
-    console.log("matching pairs" + matchingPairIndex);
-    console.log("matching pairs" + matchingPairs);
 
     if (matchPairTimeOut) {
       clearTimeout(matchPairTimeOut);
     }
-
-    matchPairTimeOut = setTimeout(() => {
+    if (matchingPairs.length > 2) {
       matchPairs();
-    }, 800);
+    } else {
+      matchPairTimeOut = setTimeout(() => {
+        matchPairs();
+      }, 2000);
+    }
   }
 
   function matchPairs() {
@@ -134,7 +125,6 @@ function createDivs() {
         symbol[matchingPairIndex[0]].classList.remove("activeSymbol");
         symbol[matchingPairIndex[1]].classList.remove("activeSymbol");
       }
-
       matchingPairs.shift();
       matchingPairs.shift();
       matchingPairIndex.shift();

@@ -6,11 +6,10 @@
 }
 
 body {
-  background: rgb(229, 250, 207);
   background: radial-gradient(
-    circle,
-    rgba(229, 250, 207, 1) 0%,
-    rgba(125, 203, 187, 1) 100%
+    circle at 10% 20%,
+    rgb(239, 246, 249) 0%,
+    rgb(206, 239, 253) 90%
   );
   width: 100vw;
   height: 100vh;
@@ -31,9 +30,9 @@ h1 {
   grid-template-columns: repeat(4, 1fr);
 }
 .symbolContainer {
-  background-color: #7dcbbb;
-  width: 80px;
-  height: 80px;
+  background-color: rgb(141, 146, 239);
+  width: 90px;
+  height: 90px;
   border-radius: 0.5rem;
   display: flex;
   justify-content: center;
@@ -52,7 +51,7 @@ h1 {
 .activeSymbolContainer {
   transform: rotateY(-180deg);
   transition: all 1s ease-in-out;
-  background-color: #bde691;
+  background-color: #00308f;
 }
 
 .activeSymbol {
@@ -81,7 +80,14 @@ h1 {
 
 @media screen and (max-width: 425px) {
   .symbolContainer {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .symbolContainer {
+    width: 60px;
+    height: 60px;
   }
 }

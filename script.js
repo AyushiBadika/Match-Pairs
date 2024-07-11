@@ -67,7 +67,7 @@ function selectingSymbols() {
 }
 
 function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
+  for (let i = array.length - 1; i >= 0; i--) {
     const j = Math.floor(Math.random() * i + 1);
     [array[i], array[j]] = [array[j], array[i]];
   }
@@ -85,17 +85,19 @@ function createDivs() {
   console.log(symbolContainer);
   console.log(symbol);
 
+  let matchingPairs = [];
+  let matchingPairIndex = [];
+  let matchPairTimeOut;
+
   symbolContainer.forEach((singleSymbol, index) => {
     singleSymbol.addEventListener("click", () => {
       console.log("clicked");
-      noOfAttempts.innerHTML = Number(noOfAttempts.innerHTML) + 1;
-      gameFunctionality(index);
+      setTimeout(() => {
+        noOfAttempts.innerHTML = Number(noOfAttempts.innerHTML) + 1;
+        gameFunctionality(index);
+      }, 200);
     });
   });
-
-  let steps = 0;
-  let matchingPairs = [];
-  let matchingPairIndex = [];
 
   function gameFunctionality(index) {
     console.log("symbolsClicked" + symbol[index].innerHTML);
@@ -107,27 +109,34 @@ function createDivs() {
 
     symbolContainer[index].classList.add("activeSymbolContainer");
     symbol[index].classList.add("activeSymbol");
-    setTimeout(() => {
+
+    if (matchPairTimeOut) {
+      clearTimeout(matchPairTimeOut);
+    }
+
+    matchPairTimeOut = setTimeout(() => {
       matchPairs();
-    }, 1000);
+    }, 500);
   }
 
   function matchPairs() {
-    if (matchingPairs.length === 2) {
-      matchingPairs[0] === matchingPairs[1]
-        ? (console.log("matched"),
-          (matchingPairIndex = []),
-          (matchingPairs = []))
-        : ((matchingPairs = []),
-          symbolContainer[matchingPairIndex[0]].classList.remove(
-            "activeSymbolContainer"
-          ),
-          symbolContainer[matchingPairIndex[1]].classList.remove(
-            "activeSymbolContainer"
-          ),
-          symbol[matchingPairIndex[0]].classList.remove("activeSymbol"),
-          symbol[matchingPairIndex[1]].classList.remove("activeSymbol"),
-          (matchingPairIndex = []));
+    while (matchingPairs.length > 1) {
+      console.log(matchingPairs.length);
+      if (matchingPairs[0] !== matchingPairs[1]) {
+        symbolContainer[matchingPairIndex[0]].classList.remove(
+          "activeSymbolContainer"
+        );
+        symbolContainer[matchingPairIndex[1]].classList.remove(
+          "activeSymbolContainer"
+        );
+        symbol[matchingPairIndex[0]].classList.remove("activeSymbol");
+        symbol[matchingPairIndex[1]].classList.remove("activeSymbol");
+      }
+
+      matchingPairs.shift();
+      matchingPairs.shift();
+      matchingPairIndex.shift();
+      matchingPairIndex.shift();
     }
   }
 }

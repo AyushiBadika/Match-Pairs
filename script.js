@@ -88,6 +88,7 @@ function createDivs() {
   symbolContainer.forEach((singleSymbol, index) => {
     singleSymbol.addEventListener("click", () => {
       noOfAttempts.innerHTML = Number(noOfAttempts.innerHTML) + 1;
+
       symbol[index].classList.add("activeSymbol");
       symbolContainer[index].classList.add("activeSymbolContainer");
 
